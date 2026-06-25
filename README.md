@@ -13,9 +13,11 @@ platform by Developers Hub Sdn Bhd.
 |---|---|
 | `schema/v1/envelope.schema.json` | The canonical envelope JSON Schema (draft 2020-12) — **the contract** |
 | `examples/v1/envelope.example.json` | A conforming example envelope |
-| `contracts.go` | Embeds the schema + `Validate` helpers for Go consumers |
+| `contracts.go` / `envelope.go` | Go: embedded schema, version-routing validator, typed `Envelope` structs |
+| `src/Schema.php` | PHP/Composer: locate + decode the schema (`G8scope\Contracts\Schema`) |
+| `composer.json` | Composer package `g8scope/contracts` |
 | `VERSION` | Current contract version (semver) |
-| `docs/versioning.md` | Versioning + pinning policy |
+| `docs/versioning.md` · `docs/otlp-mapping.md` | Versioning + pinning policy · OTLP ↔ envelope mapping (P3) |
 
 ## Who consumes it (and how)
 
@@ -31,16 +33,47 @@ platform by Developers Hub Sdn Bhd.
 and stamped, so a client cannot spoof another tenant. The schema rejects a `project` field
 (`additionalProperties: false`).
 
-## Use from Go
+## Use from Go (g8scope-api / g8scope-mcp)
 
 ```go
 import contracts "github.com/developers-hub-my/g8scope-contracts"
 
-if err := contracts.ValidateEnvelopeV1Bytes(raw); err != nil {
+// Version-routing validate (reads schema_version, picks the matching major):
+if err := contracts.ValidateEnvelope(raw); err != nil {
     // reject the envelope
 }
-raw, _ := contracts.EnvelopeSchemaV1() // embedded schema bytes
+
+// Validate + unmarshal into typed structs:
+env, err := contracts.UnmarshalEnvelope(raw)
+_ = env.Exception.Type
+
+schemaBytes, _ := contracts.EnvelopeSchema(1) // embedded schema bytes for a major
 ```
+
+## Use from Laravel (g8scope-core / g8scope-app)
+
+Add the repo as a Composer VCS source, then require it (private repo — git auth applies):
+
+```jsonc
+// composer.json
+"repositories": [
+  { "type": "vcs", "url": "https://github.com/developers-hub-my/g8scope-contracts" }
+]
+```
+
+```bash
+composer require g8scope/contracts:^1.0
+```
+
+```php
+use G8scope\Contracts\Schema;
+
+$path  = Schema::path(1);              // absolute path to the v1 schema
+$array = Schema::decode(1);            // schema as an array (derive DTOs from this)
+$major = Schema::majorFromVersion('1.0'); // => 1
+```
+
+Envelope DTOs are **derived** from this schema in `g8scope-core` — the envelope is never redefined.
 
 ## Test
 

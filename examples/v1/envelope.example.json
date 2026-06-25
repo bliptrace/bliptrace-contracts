@@ -26,7 +26,16 @@
     "user": { "id": "u_123" },
     "custom": {}
   },
-  "breadcrumbs": [],
+  "breadcrumbs": [
+    {
+      "timestamp": "2026-06-25T09:14:31.900Z",
+      "type": "http",
+      "category": "request",
+      "level": "info",
+      "message": "POST /password/reset",
+      "data": { "status": 500 }
+    }
+  ],
   "tags": { "tenant": "umpsa" },
   "trace": { "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736", "span_id": "00f067aa0ba902b7" }
 }

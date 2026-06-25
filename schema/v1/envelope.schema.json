@@ -35,7 +35,7 @@
       "additionalProperties": false,
       "required": ["name"],
       "properties": {
-        "name": { "type": "string", "description": "e.g. php, javascript, python, go" },
+        "name": { "type": "string", "minLength": 1, "description": "e.g. php, javascript, python, go" },
         "version": { "type": "string" }
       }
     },
@@ -64,7 +64,7 @@
       "additionalProperties": false,
       "required": ["type", "frames"],
       "properties": {
-        "type": { "type": "string", "description": "Exception/error class or type." },
+        "type": { "type": "string", "minLength": 1, "description": "Exception/error class or type." },
         "message": { "type": "string" },
         "frames": {
           "type": "array",
@@ -103,7 +103,8 @@
     },
     "breadcrumbs": {
       "type": "array",
-      "items": { "type": "object" }
+      "description": "Ordered trail of events leading up to the error (oldest first).",
+      "items": { "$ref": "#/$defs/breadcrumb" }
     },
     "tags": {
       "type": "object",
@@ -121,12 +122,39 @@
     }
   },
   "$defs": {
+    "breadcrumb": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["timestamp", "type"],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the breadcrumb was recorded."
+        },
+        "type": {
+          "type": "string",
+          "description": "Breadcrumb kind, e.g. navigation, http, log, query, user."
+        },
+        "category": { "type": "string" },
+        "level": {
+          "type": "string",
+          "enum": ["debug", "info", "warning", "error", "fatal"]
+        },
+        "message": { "type": "string" },
+        "data": {
+          "type": "object",
+          "description": "Arbitrary structured payload. PII-bearing — scrubbed server-side.",
+          "additionalProperties": true
+        }
+      }
+    },
     "frame": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
         "file": { "type": "string" },
-        "line": { "type": "integer" },
+        "line": { "type": "integer", "minimum": 0 },
         "function": { "type": "string" },
         "in_app": {
           "type": "boolean",

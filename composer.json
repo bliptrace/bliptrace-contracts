@@ -1,0 +1,18 @@
+{
+    "name": "g8scope/contracts",
+    "description": "Source of truth for the g8scope error envelope — versioned JSON Schema + a thin PHP helper to locate and decode it. Consumed by g8scope-core / g8scope-app; the Go services consume the same schema as a Go module.",
+    "keywords": ["g8scope", "json-schema", "error-tracking", "contract"],
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": "^8.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "G8scope\\Contracts\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

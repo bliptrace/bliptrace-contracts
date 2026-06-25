@@ -42,9 +42,17 @@ type SDK struct {
 
 // Exception is the captured error and its stack frames.
 type Exception struct {
-	Type    string  `json:"type"`
+	Type     string              `json:"type"`
+	Message  string              `json:"message,omitempty"`
+	Frames   []Frame             `json:"frames"`
+	Previous []PreviousException `json:"previous,omitempty"` // chained causes, added in 1.1
+}
+
+// PreviousException is one link in the exception cause chain (added in 1.1).
+type PreviousException struct {
+	Type    string  `json:"type,omitempty"`
 	Message string  `json:"message,omitempty"`
-	Frames  []Frame `json:"frames"`
+	Frames  []Frame `json:"frames,omitempty"`
 }
 
 // Frame is a single stack frame.

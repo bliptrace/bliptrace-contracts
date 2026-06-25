@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "event_id": "9f1c0a7e-1f2b-4d3e-9a8b-2c4d5e6f7a8b",
   "occurred_at": "2026-06-25T09:14:32.521Z",
   "runtime": { "name": "php", "version": "8.3.7" },
@@ -18,11 +18,27 @@
         "in_app": true,
         "context": { "pre": ["..."], "line": "...", "post": ["..."] }
       }
+    ],
+    "previous": [
+      { "type": "PDOException", "message": "SQLSTATE[HY000]: connection refused" }
     ]
   },
   "fingerprint_hint": null,
   "context": {
-    "request": { "method": "POST", "url": "/password/reset", "headers": {} },
+    "request": {
+      "method": "POST",
+      "url": "/password/reset",
+      "headers": {},
+      "status_code": 500,
+      "route": "password.reset",
+      "duration_ms": 128.4
+    },
+    "query": {
+      "connection": "pgsql",
+      "sql": "update users set password = ? where id = ?",
+      "bindings": ["***", "u_123"],
+      "duration_ms": 12.3
+    },
     "user": { "id": "u_123" },
     "custom": {}
   },

@@ -55,11 +55,12 @@ func TestUnmarshalEnvelope(t *testing.T) {
 		got  any
 		want any
 	}{
-		{"schema_version", env.SchemaVersion, "1.0"},
+		{"schema_version", env.SchemaVersion, "1.1"},
 		{"runtime name", env.Runtime.Name, "php"},
 		{"level", env.Level, "error"},
 		{"exception type", env.Exception.Type, "RuntimeException"},
 		{"frame in_app", env.Exception.Frames[0].InApp, true},
+		{"previous type", env.Exception.Previous[0].Type, "PDOException"},
 		{"breadcrumb type", env.Breadcrumbs[0].Type, "http"},
 		{"tag tenant", env.Tags["tenant"], "umpsa"},
 		{"trace id", env.Trace.TraceID, "4bf92f3577b34da6a3ce929d0e0e4736"},

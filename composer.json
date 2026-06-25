@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "G8scope\\Contracts\\": "src/"
+            "G8Scope\\Contracts\\": "src/"
         }
     },
     "config": {

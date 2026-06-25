@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace G8scope\Contracts;
+namespace G8Scope\Contracts;
 
 use InvalidArgumentException;
 

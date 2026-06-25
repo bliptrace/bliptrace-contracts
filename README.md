@@ -14,7 +14,7 @@ platform by Developers Hub Sdn Bhd.
 | `schema/v1/envelope.schema.json` | The canonical envelope JSON Schema (draft 2020-12) — **the contract** |
 | `examples/v1/envelope.example.json` | A conforming example envelope |
 | `contracts.go` / `envelope.go` | Go: embedded schema, version-routing validator, typed `Envelope` structs |
-| `src/Schema.php` | PHP/Composer: locate + decode the schema (`G8scope\Contracts\Schema`) |
+| `src/Schema.php` | PHP/Composer: locate + decode the schema (`G8Scope\Contracts\Schema`) |
 | `composer.json` | Composer package `g8scope/contracts` |
 | `VERSION` | Current contract version (semver) |
 | `docs/versioning.md` · `docs/otlp-mapping.md` | Versioning + pinning policy · OTLP ↔ envelope mapping (P3) |
@@ -66,7 +66,7 @@ composer require g8scope/contracts:^1.0
 ```
 
 ```php
-use G8scope\Contracts\Schema;
+use G8Scope\Contracts\Schema;
 
 $path  = Schema::path(1);              // absolute path to the v1 schema
 $array = Schema::decode(1);            // schema as an array (derive DTOs from this)

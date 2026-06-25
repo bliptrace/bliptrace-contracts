@@ -1,0 +1,12 @@
+# Binaries / build
+/bin/
+*.exe
+
+# Test / coverage
+*.out
+coverage.*
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

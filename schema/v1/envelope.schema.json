@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.g8suite.com/v1/envelope.schema.json",
+  "title": "g8scope Error Envelope",
+  "description": "The language-neutral wire contract every SDK, the ingest API and the fingerprinter agree on. See docs and the platform specification §10. NOTE: `project` is intentionally absent — it is resolved server-side from the ingest key and stamped, so a client cannot spoof another tenant.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "occurred_at",
+    "runtime",
+    "level",
+    "exception"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Envelope version. Breaking changes bump the major.",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "event_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Client-generated UUID. Idempotency key for safe retry / spool replay."
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the error occurred, RFC 3339 / ISO 8601 with timezone."
+    },
+    "runtime": {
+      "type": "object",
+      "description": "Drives the per-runtime fingerprint normaliser.",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "description": "e.g. php, javascript, python, go" },
+        "version": { "type": "string" }
+      }
+    },
+    "sdk": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    },
+    "environment": {
+      "type": "string",
+      "description": "e.g. production, staging, local."
+    },
+    "release": {
+      "type": ["string", "null"],
+      "description": "Release marker, e.g. my-app@2026.06.21."
+    },
+    "level": {
+      "type": "string",
+      "enum": ["debug", "info", "warning", "error", "fatal"]
+    },
+    "exception": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "frames"],
+      "properties": {
+        "type": { "type": "string", "description": "Exception/error class or type." },
+        "message": { "type": "string" },
+        "frames": {
+          "type": "array",
+          "description": "Stack frames, typically outermost-first or innermost-first per runtime normaliser.",
+          "items": { "$ref": "#/$defs/frame" }
+        }
+      }
+    },
+    "fingerprint_hint": {
+      "type": ["string", "null"],
+      "description": "Optional client override of grouping. When present, overrides the default fingerprint."
+    },
+    "context": {
+      "type": "object",
+      "description": "PII-bearing — scrubbed server-side before storage.",
+      "additionalProperties": true,
+      "properties": {
+        "request": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "method": { "type": "string" },
+            "url": { "type": "string" },
+            "headers": { "type": "object" }
+          }
+        },
+        "user": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "custom": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "breadcrumbs": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "tags": {
+      "type": "object",
+      "description": "String key/value tags, e.g. {\"tenant\": \"umpsa\"}.",
+      "additionalProperties": { "type": "string" }
+    },
+    "trace": {
+      "type": "object",
+      "description": "Optional W3C IDs for log<->trace correlation.",
+      "additionalProperties": false,
+      "properties": {
+        "trace_id": { "type": "string" },
+        "span_id": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "file": { "type": "string" },
+        "line": { "type": "integer" },
+        "function": { "type": "string" },
+        "in_app": {
+          "type": "boolean",
+          "description": "Separates app frames from vendor frames — key for grouping."
+        },
+        "context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pre": { "type": "array", "items": { "type": "string" } },
+            "line": { "type": "string" },
+            "post": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}

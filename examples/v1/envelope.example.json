@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "event_id": "9f1c0a7e-1f2b-4d3e-9a8b-2c4d5e6f7a8b",
+  "occurred_at": "2026-06-25T09:14:32.521Z",
+  "runtime": { "name": "php", "version": "8.3.7" },
+  "sdk": { "name": "g8scope-laravel", "version": "1.0.0" },
+  "environment": "production",
+  "release": "osc-portal@2026.06.21",
+  "level": "error",
+  "exception": {
+    "type": "RuntimeException",
+    "message": "AD Baharu write failed",
+    "frames": [
+      {
+        "file": "app/Actions/ResetPassword.php",
+        "line": 42,
+        "function": "ResetPassword::__invoke",
+        "in_app": true,
+        "context": { "pre": ["..."], "line": "...", "post": ["..."] }
+      }
+    ]
+  },
+  "fingerprint_hint": null,
+  "context": {
+    "request": { "method": "POST", "url": "/password/reset", "headers": {} },
+    "user": { "id": "u_123" },
+    "custom": {}
+  },
+  "breadcrumbs": [],
+  "tags": { "tenant": "umpsa" },
+  "trace": { "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736", "span_id": "00f067aa0ba902b7" }
+}

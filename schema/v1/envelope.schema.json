@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://contracts.g8suite.com/v1/envelope.schema.json",
+  "$id": "https://scope.g8suite.com/contracts/v1/envelope.schema.json",
   "title": "g8scope Error Envelope",
   "description": "The language-neutral wire contract every SDK, the ingest API and the fingerprinter agree on. See docs and the platform specification §10. NOTE: `project` is intentionally absent — it is resolved server-side from the ingest key and stamped, so a client cannot spoof another tenant.",
   "type": "object",

@@ -70,6 +70,19 @@
           "type": "array",
           "description": "Stack frames, typically outermost-first or innermost-first per runtime normaliser.",
           "items": { "$ref": "#/$defs/frame" }
+        },
+        "previous": {
+          "type": "array",
+          "description": "Chained / previous exceptions (the cause chain), outermost-first. ADDED in 1.1 — optional.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": { "type": "string" },
+              "message": { "type": "string" },
+              "frames": { "type": "array", "items": { "$ref": "#/$defs/frame" } }
+            }
+          }
         }
       }
     },
@@ -88,7 +101,23 @@
           "properties": {
             "method": { "type": "string" },
             "url": { "type": "string" },
-            "headers": { "type": "object" }
+            "headers": { "type": "object" },
+            "status_code": { "type": "integer", "description": "Response status. ADDED in 1.1." },
+            "route": { "type": "string", "description": "Matched route / controller action. ADDED in 1.1." },
+            "query": { "type": "object", "description": "Query-string params. ADDED in 1.1." },
+            "body": { "type": "object", "description": "Request payload (PII-bearing, scrubbed). ADDED in 1.1." },
+            "duration_ms": { "type": "number", "description": "Request duration in milliseconds. ADDED in 1.1." }
+          }
+        },
+        "query": {
+          "type": "object",
+          "description": "The database query running when the error occurred. ADDED in 1.1 — optional.",
+          "additionalProperties": true,
+          "properties": {
+            "connection": { "type": "string" },
+            "sql": { "type": "string" },
+            "bindings": { "type": "array" },
+            "duration_ms": { "type": "number" }
           }
         },
         "user": {

@@ -1,4 +1,4 @@
-# g8scope-contracts
+# bliptrace-contracts
 
 The **source of truth** for the g8scope **error envelope** — the language-neutral wire contract every
 SDK, the ingest API, and the fingerprinter agree on. Part of the [g8scope](https://g8suite.com)
@@ -23,8 +23,8 @@ platform by Developers Hub Sdn Bhd.
 
 | Consumer | Pull mechanism | Derives |
 |---|---|---|
-| `g8scope-api` (Go) | Tagged Go module (`import`) or codegen from schema | Envelope structs + runtime validator |
-| `g8scope-core` / `g8scope-app` (Laravel) | Composer (path / private registry) | Envelope DTOs |
+| `bliptrace-api` (Go) | Tagged Go module (`import`) or codegen from schema | Envelope structs + runtime validator |
+| `bliptrace-core` / `bliptrace-app` (Laravel) | Composer (path / private registry) | Envelope DTOs |
 | SDKs (PHP, JS, WP, …) | Pin the schema version | Payload they POST (the universal `curl`-able envelope) |
 
 ## Anti-spoof rule
@@ -33,10 +33,10 @@ platform by Developers Hub Sdn Bhd.
 and stamped, so a client cannot spoof another tenant. The schema rejects a `project` field
 (`additionalProperties: false`).
 
-## Use from Go (g8scope-api / g8scope-mcp)
+## Use from Go (bliptrace-api / bliptrace-mcp)
 
 ```go
-import contracts "github.com/developers-hub-my/g8scope-contracts"
+import contracts "github.com/bliptrace/bliptrace-contracts"
 
 // Version-routing validate (reads schema_version, picks the matching major):
 if err := contracts.ValidateEnvelope(raw); err != nil {
@@ -50,14 +50,14 @@ _ = env.Exception.Type
 schemaBytes, _ := contracts.EnvelopeSchema(1) // embedded schema bytes for a major
 ```
 
-## Use from Laravel (g8scope-core / g8scope-app)
+## Use from Laravel (bliptrace-core / bliptrace-app)
 
 Add the repo as a Composer VCS source, then require it (private repo — git auth applies):
 
 ```jsonc
 // composer.json
 "repositories": [
-  { "type": "vcs", "url": "https://github.com/developers-hub-my/g8scope-contracts" }
+  { "type": "vcs", "url": "https://github.com/bliptrace/bliptrace-contracts" }
 ]
 ```
 
@@ -73,7 +73,7 @@ $array = Schema::decode(1);            // schema as an array (derive DTOs from t
 $major = Schema::majorFromVersion('1.0'); // => 1
 ```
 
-Envelope DTOs are **derived** from this schema in `g8scope-core` — the envelope is never redefined.
+Envelope DTOs are **derived** from this schema in `bliptrace-core` — the envelope is never redefined.
 
 ## Test
 
@@ -88,4 +88,4 @@ Breaking envelope changes bump the **major** of `schema_version` and `VERSION`, 
 
 ---
 
-_Developers Hub Sdn Bhd · devhub.my · g8scope-contracts_
+_Developers Hub Sdn Bhd · devhub.my · bliptrace-contracts_

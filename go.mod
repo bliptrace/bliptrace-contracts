@@ -1,4 +1,4 @@
-module github.com/developers-hub-my/g8scope-contracts
+module github.com/bliptrace/bliptrace-contracts
 
 go 1.25.0
 

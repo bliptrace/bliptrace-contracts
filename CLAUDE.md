@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-`g8scope-contracts` is the **source of truth for the error envelope** — the single language-neutral
+`bliptrace-contracts` is the **source of truth for the error envelope** — the single language-neutral
 wire contract for g8scope (Developers Hub Sdn Bhd). It is **not a service**; it is a **versioned
 dependency** pinned by every other repo so the API, web/core and all SDKs agree on one shape.
 
@@ -53,5 +53,5 @@ docs/versioning.md                 versioning + pinning policy
 
 ## Who derives from this
 
-`g8scope-api` (Go structs + validator) · `g8scope-core` / `g8scope-app` (Laravel DTOs) · all SDKs
+`bliptrace-api` (Go structs + validator) · `bliptrace-core` / `bliptrace-app` (Laravel DTOs) · all SDKs
 (PHP, JS, WordPress, …). See `docs/versioning.md` and the platform spec §10, §18, §20.1.

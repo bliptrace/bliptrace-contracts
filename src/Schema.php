@@ -9,8 +9,8 @@ use InvalidArgumentException;
 /**
  * Locator + decoder for the versioned g8scope error-envelope JSON Schema.
  *
- * This is the Composer consumption surface (spec §10, §20.1): g8scope-core and
- * g8scope-app derive their envelope DTOs from the schema returned here, instead of
+ * This is the Composer consumption surface (spec §10, §20.1): bliptrace-core and
+ * bliptrace-app derive their envelope DTOs from the schema returned here, instead of
  * redefining the envelope. The Go services consume the same files as a Go module.
  */
 final class Schema

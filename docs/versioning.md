@@ -35,8 +35,8 @@ matching validator.
 
 | Consumer | Pin |
 |---|---|
-| `g8scope-api`, `g8scope-mcp` (Go) | Go module tag: `require github.com/developers-hub-my/g8scope-contracts vX.Y.Z` |
-| `g8scope-core` / `g8scope-app` (Laravel) | Composer constraint (path or private registry) |
+| `bliptrace-api`, `bliptrace-mcp` (Go) | Go module tag: `require github.com/bliptrace/bliptrace-contracts vX.Y.Z` |
+| `bliptrace-core` / `bliptrace-app` (Laravel) | Composer constraint (path or private registry) |
 | SDKs | Embed/declare the `schema_version` they target |
 
 ## Release checklist

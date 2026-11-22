@@ -1,9 +1,9 @@
 // Package contracts is the source of truth for the g8scope error envelope.
 //
 // The canonical artifact is the JSON Schema under schema/. This package embeds it
-// and offers Validate helpers + typed Go structs so Go consumers (g8scope-api) can
+// and offers Validate helpers + typed Go structs so Go consumers (bliptrace-api) can
 // validate envelopes and unmarshal them into types from the same single source.
-// Laravel consumers (g8scope-core / g8scope-app) pull the same schema via Composer.
+// Laravel consumers (bliptrace-core / bliptrace-app) pull the same schema via Composer.
 // Pin a version in every consumer so they never silently diverge.
 //
 // Multi-major coexistence: schema/vN/ directories live side by side. ValidateEnvelope
